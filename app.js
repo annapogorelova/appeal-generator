@@ -66,7 +66,7 @@ tech_elements_addon_options = [
     "(з дротами та кріпленнями)"
 ]
 
-greetings = ["Доброго дня!", "Вітаю!", "Добрий день!"];
+greetings = ["Доброго дня!", "Доброго дня", "Добрий день!", "Добрий день.", "Вітаю.", "Вітаю!"];
 thanks = ["Дякую!", "Дякую."]
 
 
@@ -196,6 +196,11 @@ function generateAppealText(params) {
         appealText = `${greeting} ${appealText}.`;
     } else {
         appealText += ".";
+    }
+
+    add_thanks = selectRandom([true, false]);
+    if (add_thanks) {
+        appealText += ' ' + selectRandom(thanks);
     }
 
     return appealText;
