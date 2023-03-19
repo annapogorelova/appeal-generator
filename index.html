@@ -8,8 +8,8 @@
 
 <body>
     <div class="container mt-5">
-        <h1>Оберіть параметри звернення</h1>
-        <div class="form-group">
+        <h2>Оберіть параметри звернення</h1>
+        <div class="form-group mt-3">
             <label for="addressInput">Адреса (назва вулиці, номер будинку):</label>
             <input type="text" class="form-control" id="addressInput" placeholder="Площа Ринок, 1">
         </div>
@@ -117,7 +117,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <button type="submit" class="btn btn-primary float-right mt-5" id="submitBtn" disabled>Згенерувати</button>
+                <button type="submit" class="btn btn-primary float-right" id="submitBtn" disabled>Згенерувати</button>
             </div>
         </div>
         <div class="row">
@@ -134,6 +134,8 @@
 
         <script src="app.js"></script>
         <script>
+            var addressInput = document.getElementById("addressInput");
+
             var isConditionerInput = document.getElementById("isConditionerInput");
             var isMultipleConditionersInput = document.getElementById("isMultipleConditionersInput");
             
@@ -147,7 +149,17 @@
             
             var isUnescoInput = document.getElementById("isUnescoInput");
             var isArchitecturalMonumentInput = document.getElementById("isArchitecturalMonumentInput");
-            var submitBtn = document.getElementById('submitBtn');
+            var submitBtn = document.getElementById("submitBtn");
+
+            function isSubmitDisabled() {
+                const checked = isAntennaInput.checked || isConditionerInput.checked || isRoofInput.checked || isTechElementsInput.checked;
+                const hasAddress = addressInput.value != "";
+                return !checked || !hasAddress;
+            }
+
+            addressInput.addEventListener("input", function() {
+                submitBtn.disabled = isSubmitDisabled();
+            });
 
             isConditionerInput.addEventListener("change", function () {
                 var conditionerCountInput = document.getElementById("conditionerCountInput");
@@ -177,7 +189,7 @@
                 }
             });
 
-            isTechElementsInput.addEventListener('change', () => {
+            isTechElementsInput.addEventListener("change", () => {
                 const checked = isTechElementsInput.checked;
                 if (checked) {
                     isAntennaInput.checked = false;
@@ -203,13 +215,13 @@
                     isMultipleRoofsInput.disabled = false;
                 }
 
-                isConditionerInput.dispatchEvent(new Event('change'));
-                isAntennaInput.dispatchEvent(new Event('change'));
-                isRoofInput.dispatchEvent(new Event('change'));
+                isConditionerInput.dispatchEvent(new Event("change"));
+                isAntennaInput.dispatchEvent(new Event("change"));
+                isRoofInput.dispatchEvent(new Event("change"));
             });
 
 
-            isUnescoInput.addEventListener('change', () => {
+            isUnescoInput.addEventListener("change", () => {
                 const checked = isUnescoInput.checked;
                 if (checked) {
                     isArchitecturalMonumentInput.checked = false;
@@ -219,7 +231,7 @@
                 }
             });
 
-            isArchitecturalMonumentInput.addEventListener('change', () => {
+            isArchitecturalMonumentInput.addEventListener("change", () => {
                 const checked = isArchitecturalMonumentInput.checked;
                 if (checked) {
                     isUnescoInput.checked = false;
@@ -229,26 +241,25 @@
                 }
             });
 
-            [isConditionerInput, isAntennaInput, isRoofInput, isTechElementsInput].forEach((checkbox) => {
-                checkbox.addEventListener('change', () => {
-                    const checked = isAntennaInput.checked || isConditionerInput.checked || isRoofInput.checked || isTechElementsInput.checked;
-                    submitBtn.disabled = checked ? false : true;
+            [isConditionerInput, isAntennaInput, isRoofInput, isTechElementsInput, addressInput].forEach((checkbox) => {
+                checkbox.addEventListener("change", () => {
+                    submitBtn.disabled = isSubmitDisabled();
                 });
             });
 
 
             document.getElementById("submitBtn").addEventListener("click", function () { 
                 params = {
-                    'address': addressInput.value,
-                    'hasConditioner': isConditionerInput.checked,
-                    'hasMultipleConditioners': isMultipleConditionersInput.checked,
-                    'hasAntenna': isAntennaInput.checked,
-                    'hasMultipleAntennas': isMultipleAntennasInput.checked,
-                    'hasRoof': isRoofInput.checked,
-                    'hasMultipleRoofs': isMultipleRoofsInput.checked,
-                    'hasTechElements': isTechElementsInput.checked,
-                    'isArchitecturalMonument': isArchitecturalMonumentInput.checked,
-                    'isUnesco': isUnescoInput.checked
+                    "address": addressInput.value,
+                    "hasConditioner": isConditionerInput.checked,
+                    "hasMultipleConditioners": isMultipleConditionersInput.checked,
+                    "hasAntenna": isAntennaInput.checked,
+                    "hasMultipleAntennas": isMultipleAntennasInput.checked,
+                    "hasRoof": isRoofInput.checked,
+                    "hasMultipleRoofs": isMultipleRoofsInput.checked,
+                    "hasTechElements": isTechElementsInput.checked,
+                    "isArchitecturalMonument": isArchitecturalMonumentInput.checked,
+                    "isUnesco": isUnescoInput.checked
                 };
                 document.getElementById("messageBox").value = generateAppealText(params);
             });
