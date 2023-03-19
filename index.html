@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Генератор звернень на Гарячу Лінію</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1>Оберіть параметри звернення</h1>
+        <div class="form-group">
+            <label for="addressInput">Адреса (назва вулиці, номер будинку):</label>
+            <input type="text" class="form-control" id="addressInput" placeholder="Площа Ринок, 1">
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-auto">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="isConditionerInput">
+                        <label class="form-check-label" for="isConditionerInput">
+                            Кондиціонер
+                        </label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-group d-none" id="conditionerCountInput">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="isMultipleConditionersInput">
+                            <label class="form-check-label" for="isMultipleConditionersInput">
+                                Більше одного
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-auto">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="isAntennaInput">
+                        <label class="form-check-label" for="isAntennaInput">
+                            Антена
+                        </label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-group d-none" id="antennaCountInput">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="isMultipleAntennasInput">
+                            <label class="form-check-label" for="isMultipleAntennasInput">
+                                Більше одної
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-auto">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="isRoofInput">
+                        <label class="form-check-label" for="isRoofInput">
+                            Дашок
+                        </label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-group d-none" id="roofCountInput">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="isMultipleRoofsInput">
+                            <label class="form-check-label" for="isMultipleRoofsInput">
+                                Більше одного
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-auto">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="isTechElementsInput">
+                        <label class="form-check-label" for="isTechElementsInput">
+                            Технічні елементи
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-auto">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="isArchitecturalMonumentInput">
+                        <label class="form-check-label" for="isArchitecturalMonumentInput">
+                            Пам'ятка архітектури
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-auto">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="isUnescoInput">
+                        <label class="form-check-label" for="isUnescoInput">
+                            ЮНЕСКО
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary float-right mt-5" id="submitBtn" disabled>Згенерувати</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group mt-5">
+                    <label for="message">Текст звернення</label>
+                    <textarea class="form-control" id="messageBox" rows="3"></textarea>
+                    <div class="input-group-append float-right mt-2">
+                        <button class="btn btn-secondary" type="button" onclick="copyToClipboard()">Копіювати</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="app.js"></script>
+        <script>
+            document.getElementById("addressInput").value = "Площа Ринок, 1";
+
+            var isConditionerInput = document.getElementById("isConditionerInput");
+            var isMultipleConditionersInput = document.getElementById("isMultipleConditionersInput");
+            
+            var isAntennaInput = document.getElementById("isAntennaInput");
+            var isMultipleAntennasInput = document.getElementById("isMultipleAntennasInput");
+            
+            var isRoofInput = document.getElementById("isRoofInput");
+            var isMultipleRoofsInput = document.getElementById("isMultipleRoofsInput");
+            
+            var isTechElementsInput = document.getElementById("isTechElementsInput");
+            
+            var isUnescoInput = document.getElementById("isUnescoInput");
+            var isArchitecturalMonumentInput = document.getElementById("isArchitecturalMonumentInput");
+            var submitBtn = document.getElementById('submitBtn');
+
+            isConditionerInput.addEventListener("change", function () {
+                var conditionerCountInput = document.getElementById("conditionerCountInput");
+                if (this.checked) {
+                    conditionerCountInput.classList.remove("d-none");
+                } else {
+                    conditionerCountInput.classList.add("d-none");
+                }
+            });
+
+
+            isAntennaInput.addEventListener("change", function () {
+                var antennaCountInput = document.getElementById("antennaCountInput");
+                if (this.checked) {
+                    antennaCountInput.classList.remove("d-none");
+                } else {
+                    antennaCountInput.classList.add("d-none");
+                }
+            });
+
+            isRoofInput.addEventListener("change", function () {
+                var roofCountInput = document.getElementById("roofCountInput");
+                if (this.checked) {
+                    roofCountInput.classList.remove("d-none");
+                } else {
+                    roofCountInput.classList.add("d-none");
+                }
+            });
+
+            isTechElementsInput.addEventListener('change', () => {
+                const checked = isTechElementsInput.checked;
+                if (checked) {
+                    isAntennaInput.checked = false;
+                    isAntennaInput.disabled = true;
+                    isMultipleAntennasInput.checked = false;
+                    isMultipleAntennasInput.disabled = true;
+                    
+                    isConditionerInput.checked = false;
+                    isConditionerInput.disabled = true;
+                    isMultipleConditionersInput.checked = false;
+                    isMultipleConditionersInput.disabled = true;
+
+                    isRoofInput.checked = false;
+                    isRoofInput.disabled = true;
+                    isMultipleRoofsInput.checked = false;
+                    isMultipleRoofsInput.disabled = true;
+                } else {
+                    isAntennaInput.disabled = false;
+                    isMultipleAntennasInput.disabled = false;
+                    isConditionerInput.disabled = false;
+                    isMultipleConditionersInput.disabled = false;
+                    isRoofInput.disabled = false;
+                    isMultipleRoofsInput.disabled = false;
+                }
+
+                isConditionerInput.dispatchEvent(new Event('change'));
+                isAntennaInput.dispatchEvent(new Event('change'));
+                isRoofInput.dispatchEvent(new Event('change'));
+            });
+
+
+            isUnescoInput.addEventListener('change', () => {
+                const checked = isUnescoInput.checked;
+                if (checked) {
+                    isArchitecturalMonumentInput.checked = false;
+                    isArchitecturalMonumentInput.disabled = true;
+                } else {
+                    isArchitecturalMonumentInput.disabled = false;
+                }
+            });
+
+            isArchitecturalMonumentInput.addEventListener('change', () => {
+                const checked = isArchitecturalMonumentInput.checked;
+                if (checked) {
+                    isUnescoInput.checked = false;
+                    isUnescoInput.disabled = true;
+                } else {
+                    isUnescoInput.disabled = false;
+                }
+            });
+
+            [isConditionerInput, isAntennaInput, isRoofInput, isTechElementsInput].forEach((checkbox) => {
+                checkbox.addEventListener('change', () => {
+                    const checked = isAntennaInput.checked || isConditionerInput.checked || isRoofInput.checked || isTechElementsInput.checked;
+                    submitBtn.disabled = checked ? false : true;
+                });
+            });
+
+
+            document.getElementById("submitBtn").addEventListener("click", function () { 
+                params = {
+                    'address': addressInput.value,
+                    'hasConditioner': isConditionerInput.checked,
+                    'hasMultipleConditioners': isMultipleConditionersInput.checked,
+                    'hasAntenna': isAntennaInput.checked,
+                    'hasMultipleAntennas': isMultipleAntennasInput.checked,
+                    'hasRoof': isRoofInput.checked,
+                    'hasMultipleRoofs': isMultipleRoofsInput.checked,
+                    'hasTechElements': isTechElementsInput.checked,
+                    'isArchitecturalMonument': isArchitecturalMonumentInput.checked,
+                    'isUnesco': isUnescoInput.checked
+                };
+                document.getElementById("messageBox").value = generateAppealText(params);
+            });
+        </script>
+</body>
+
+</html>
